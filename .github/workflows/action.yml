@@ -51,7 +51,7 @@ jobs:
         needs: release-app
         steps:
             - name: Check out repository code
-              uses: action/checkout@v4
+              uses: actions/checkout@v4
             - name: login to docker
               run: echo -n ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username ${{github.actor}} --password-stdin
             - name: Build image
