@@ -28,3 +28,20 @@ jobs:
               with:
                 name: build-result
                 path: auth-app
+    
+    release-app:
+        name: "Release builded app"
+        needs: build-app
+        runs-on: ubuntu-latest
+        steps:
+            - name: Download artifact
+              uses: actions/download-artifact@v5
+              with:
+                artifact-ids: ${{needs.build-app.outputs.output1}}
+            - name: Compress artifact
+              run: zip -r auth-app.zip ./*
+            - name: Release
+              uses: softprops/action-gh-release@v3
+              with:
+                files:
+                    auth-app.zip
